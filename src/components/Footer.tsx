@@ -10,13 +10,13 @@ const Footer = () => {
           </p>
           <div className="flex gap-6">
             <a
-              href="mailto:ntandobadla@example.com"
+              href="mailto:ntandobadla1@gmail.com"
               className="text-sm hover:text-accent transition-colors"
             >
               Email
             </a>
             <a
-              href="https://github.com/ntando-badla"
+              href="https://github.com/NtandoBadla"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm hover:text-accent transition-colors"
@@ -24,7 +24,7 @@ const Footer = () => {
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/ntando-badla"
+              href="www.linkedin.com/in/ntandobadla"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm hover:text-accent transition-colors"

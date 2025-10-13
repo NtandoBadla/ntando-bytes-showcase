@@ -35,7 +35,7 @@ const About = () => {
                     />
                   </div>
                   <h3 className="text-2xl font-semibold mb-4 text-primary">
-                    Who I Am
+                    Who am I?
                   </h3>
                   <p className="text-muted-foreground leading-relaxed mb-4">
                     I'm a passionate Software Developer and recent graduate in ICT Application

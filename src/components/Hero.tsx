@@ -46,7 +46,7 @@ const Hero = () => {
                 asChild
               >
                 <a
-                  href="https://github.com/ntando-badla"
+                  href="https://github.com/NtandoBadla"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
