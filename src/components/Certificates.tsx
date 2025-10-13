@@ -10,6 +10,18 @@ const Certificates = () => {
       year: "2024",
       link: "#",
     },
+     {
+      title: "Introduction To Bash",
+      issuer: "Online Learning Platform",
+      year: "2024",
+      link: "https://learn.microsoft.com/api/achievements/share/en-us/NTANDOBADLA-5557/9Y3SXHZU?sharingId=347C3E0E51DB1DE2",
+    },
+      {
+      title: "Manage User Authentication",
+      issuer: "Online Learning Platform",
+      year: "2025",
+      link: "https://learn.microsoft.com/api/achievements/share/en-us/NTANDOBADLA-5557/8ZXESX6W?sharingId=347C3E0E51DB1DE2",
+    },
     {
       title: "Introduction to ASP.NET",
       issuer: "Online Learning Platform",
