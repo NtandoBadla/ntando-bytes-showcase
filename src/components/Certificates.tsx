@@ -11,16 +11,29 @@ const Certificates = () => {
       link: "#",
     },
     {
-      title: "Web Development Fundamentals",
+      title: "Introduction to ASP.NET",
       issuer: "Online Learning Platform",
-      year: "2023",
-      link: "#",
+      year: "2025",
+      link: "https://www.simplilearn.com/skillup-certificate-landing?token=eyJjb3Vyc2VfaWQiOiI0MTgzIiwiY2VydGlmaWNhdGVfdXJsIjoiaHR0cHM6XC9cL2NlcnRpZmljYXRlcy5zaW1wbGljZG4ubmV0XC9zaGFyZVwvODg3MjQyMF85MDc4MjI4MTc1NjM5MTEyNDg5Ny5wbmciLCJ1c2VybmFtZSI6Ik5UQU5ETyBCQURMQSJ9&utm_source=shared-certificate&utm_medium=lms&utm_campaign=shared-certificate-promotion&referrer=https%3A%2F%2Flms.simplilearn.com%2Fcourses%2F7117%2FIntroduction-to-ASP.Net%2Fcertificate%2Fdownload-skillup&%24web_only=true&_branch_match_id=1456925281727986859&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXL87MLcjJ1EssKNDLyczL1k%2FV9w4pNPRPLHRJDk%2ByrytKTUstKsrMS49PKsovL04tsvUBqkpN8cwDAL77cQ9BAAAA",
+    },
+
+    {
+      title: "Agile Scrum Master",
+      issuer: "Online Learning Platform",
+      year: "2025",
+      link: "https://www.simplilearn.com/skillup-certificate-landing?token=eyJjb3Vyc2VfaWQiOiI0NDgzIiwiY2VydGlmaWNhdGVfdXJsIjoiaHR0cHM6XC9cL2NlcnRpZmljYXRlcy5zaW1wbGljZG4ubmV0XC9zaGFyZVwvODcwMTcxM185MDc4MjI4MTc1Mzc0MDc5OTYzOS5wbmciLCJ1c2VybmFtZSI6Ik5UQU5ETyBCQURMQSJ9&utm_source=shared-certificate&utm_medium=lms&utm_campaign=shared-certificate-promotion&referrer=https%3A%2F%2Flms.simplilearn.com%2Fcourses%2F7411%2FAgile-Scrum-Master_SkillUp%2Fcertificate%2Fdownload-skillup&%24web_only=true&_branch_match_id=1456925281727986859&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXL87MLcjJ1EssKNDLyczL1k%2FVz88xdQmKCvDMC0uyrytKTUstKsrMS49PKsovL04tsvUBqkpN8cwDADVM2h1BAAAA",
     },
     {
-      title: "Database Management Systems",
-      issuer: "Professional Certification",
-      year: "2023",
-      link: "#",
+      title: "Understand concepts of data analytics",
+      issuer: "Online Learning Platform",
+      year: "2025",
+      link: "https://learn.microsoft.com/api/achievements/share/en-us/NTANDOBADLA-5557/EDL9AF4P?sharingId=347C3E0E51DB1DE2",
+    },
+    {
+      title: "Explore Data analytics at scale",
+      issuer: "Online Learning platform",
+      year: "2025",
+      link: "https://learn.microsoft.com/api/achievements/share/en-us/NTANDOBADLA-5557/UWDE47R3?sharingId=347C3E0E51DB1DE2",
     },
   ];
 

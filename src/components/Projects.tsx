@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 import projectVote from "@/assets/project-vote.jpg";
 import projectErrands from "@/assets/project-errands.jpg";
-import projectSeedo from "@/assets/project-seedo.jpg";
+
 
 const Projects = () => {
   const projects = [
@@ -11,7 +11,7 @@ const Projects = () => {
       title: "Vote Sphere Trust",
       description: "A comprehensive voting system built with modern web technologies, featuring secure authentication and real-time vote tracking.",
       image: projectVote,
-      tech: ["React", "Supabase", "PHP", "MySQL"],
+      tech: ["React", "Supabase", "PHP","NodeJS","Tailwind CSS", "MySQL"],
       github: "https://github.com/NtandoBadla/vote-sphere-trust.git",
       demo: "https://vote-phere.netlify.app",
     },
@@ -19,18 +19,11 @@ const Projects = () => {
       title: "QuickRun Errands SA",
       description: "Full-stack web application for booking and managing errands, connecting service providers with customers seamlessly.",
       image: projectErrands,
-      tech: ["React", "Laravel", "MySQL", "Tailwind CSS"],
+      tech: ["React", "Laravel", "MySQL","Supabase","NodeJS", "Tailwind CSS"],
       github: "https://github.com/NtandoBadla/errandflow-sa.git",
       demo: "https://errandrunners.netlify.app",
     },
-    {
-      title: "Seedo Fries",
-      description: "Restaurant ordering system with complete user authentication, database integration, and order management functionality.",
-      image: projectSeedo,
-      tech: ["PHP", "MySQL", "JavaScript", "Bootstrap"],
-      github: "#",
-      demo: "#",
-    },
+   
   ];
 
   return (

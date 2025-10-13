@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Download, Github } from "lucide-react";
-import heroBackground from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
   return (
@@ -8,7 +7,7 @@ const Hero = () => {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: `url(${heroBackground})`,
+        backgroundImage: "url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -35,7 +34,7 @@ const Hero = () => {
                 className="bg-white text-primary hover:bg-white/90 shadow-strong"
                 asChild
               >
-                <a href="/cv.pdf" download>
+                <a href="/src/assets/cv.pdf.pdf" download>
                   <Download className="mr-2 h-5 w-5" />
                   Download CV
                 </a>
