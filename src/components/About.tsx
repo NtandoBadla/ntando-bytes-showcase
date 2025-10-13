@@ -1,5 +1,6 @@
 import { Code2, Database, Laptop, Palette } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 const About = () => {
   const skills = [
@@ -23,9 +24,16 @@ const About = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-12 rounded-full" />
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="animate-slide-in-left">
+            <div className="animate-slide-in-left order-2 md:order-1">
               <Card className="gradient-card shadow-medium border-0 overflow-hidden">
                 <CardContent className="p-8">
+                  <div className="mb-6">
+                    <img
+                      src={profilePhoto}
+                      alt="Ntando Badla - Software Developer"
+                      className="w-48 h-48 rounded-full mx-auto object-cover shadow-strong border-4 border-primary/20"
+                    />
+                  </div>
                   <h3 className="text-2xl font-semibold mb-4 text-primary">
                     Who I Am
                   </h3>
@@ -52,7 +60,7 @@ const About = () => {
               </Card>
             </div>
 
-            <div className="animate-slide-in-right">
+            <div className="animate-slide-in-right order-1 md:order-2">
               <h3 className="text-2xl font-semibold mb-6 text-primary">
                 Skills & Technologies
               </h3>
