@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from '@emailjs/browser';
 
@@ -77,6 +77,18 @@ const Contact = () => {
       icon: Linkedin,
       href: "www.linkedin.com/in/ntandobadla",
       color: "text-accent",
+    },
+    {
+      name: "WhatsApp",
+      icon: Phone,
+      href: "https://wa.me/27746148629",
+      color: "text-green-500",
+    },
+    {
+      name: "Call",
+      icon: Phone,
+      href: "tel:0746148629",
+      color: "text-blue-500",
     },
   ];
 
