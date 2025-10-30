@@ -16,12 +16,12 @@ const Projects = () => {
       demo: "https://vote-phere.netlify.app",
     },
     {
-      title: "QuickRun Errands SA",
-      description: "Full-stack web application for booking and managing errands, connecting service providers with customers seamlessly.",
+      title: "Locker Booking system",
+      description: "Full-stack web application for booking a locker at school for the next academic year, students will receive update about their application via email.",
       image: projectErrands,
       tech: ["React", "Laravel", "MySQL","Supabase","NodeJS", "Tailwind CSS"],
-      github: "https://github.com/NtandoBadla/errandflow-sa.git",
-      demo: "https://errandrunners.netlify.app",
+      github: "https://github.com/NtandoBadla/highschool-locker-buddy.git",
+      demo: "https://amandlahighschool.netlify.app/",
     },
    
   ];
