@@ -34,7 +34,7 @@ const Hero = () => {
                 className="bg-white text-primary hover:bg-white/90 shadow-strong"
                 asChild
               >
-                <a href="/src/assets/Ntando Badla (5).pdf" download>
+                <a href="/Ntando Badla (5).pdf" download>
                   <Download className="mr-2 h-5 w-5" />
                   Download CV
                 </a>

@@ -6,6 +6,7 @@ import Services from "@/components/Services";
 import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Chatbot from "@/components/Chatbot";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <Certificates />
       <Contact />
       <Footer />
+      <Chatbot />
     </div>
   );
 };
