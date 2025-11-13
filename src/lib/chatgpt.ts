@@ -48,7 +48,7 @@ const getFallbackResponse = (message: string): string | null => {
     return "Ntando's tech stack includes: Frontend (React, HTML, CSS, TypeScript, Tailwind CSS), Backend (Java, ASP.NET, Laravel PHP), Database (MySQL), and tools like EmailJS, npm, and Node.js.";
   }
   
-  if (msg.includes('education') || msg.includes('university') || msg.includes('degree')) {
+  if (msg.includes('education') || msg.includes('university') || msg.includes('Qualification')) {
     return "Ntando is a Walter Sisulu University graduate with a diploma in ICT in Application Development, and graduated as a Software Developer.";
   }
   
