@@ -10,6 +10,7 @@ interface Message {
 interface UserInfo {
   name: string;
   email: string;
+  whatsapp?: string;
 }
 
 export const useChatbot = () => {

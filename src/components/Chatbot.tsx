@@ -159,26 +159,46 @@ const Chatbot = () => {
         .map(msg => `${msg.isUser ? userInfo.name || 'Visitor' : 'Assistant'}: ${msg.text}`)
         .join('\n');
 
+      const emailData = {
+        user_name: userInfo.name,
+        user_email: userInfo.email,
+        chat_transcript: chatTranscript,
+        timestamp: new Date().toLocaleString(),
+      };
+
+      // Send to Ntando (owner)
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_CHAT_TEMPLATE_ID,
         {
           to_email: 'ntandobadla1@gmail.com',
-          user_name: userInfo.name,
-          user_email: userInfo.email,
-          chat_transcript: chatTranscript,
-          timestamp: new Date().toLocaleString(),
+          ...emailData
         }
       );
 
+      // Send copy to user
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          to_email: userInfo.email,
+          ...emailData
+        }
+      );
+
+      // Send WhatsApp notification to Ntando
+      const whatsappMessage = `🤖 New Chat Summary\n\nFrom: ${userInfo.name}\nEmail: ${userInfo.email}\nTime: ${new Date().toLocaleString()}\n\nChat Summary:\n${chatTranscript.substring(0, 500)}...\n\nCheck your email for full details.`;
+      const whatsappUrl = `https://wa.me/27746148629?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank');
+
       // Clear chat and show confirmation
       setMessages([]);
-      addMessage("Thank you! Your message has been sent to Ntando. He will get in touch with you soon.", false);
+      addMessage("Thank you! Chat summary sent to both you and Ntando. He will get in touch with you soon. A WhatsApp notification has also been sent.", false);
       setShowUserForm(false);
       
       toast({
         title: "Chat Summary Sent!",
-        description: "Ntando will review your conversation and get back to you soon.",
+        description: "Summary sent to both emails and WhatsApp notification created.",
       });
     } catch (error) {
       console.error('Email Error:', error);
@@ -301,6 +321,12 @@ const Chatbot = () => {
                     type="email"
                     value={userInfo.email}
                     onChange={(e) => updateUserInfo({ email: e.target.value })}
+                  />
+                  <Input
+                    placeholder="WhatsApp Number (optional)"
+                    type="tel"
+                    value={userInfo.whatsapp || ''}
+                    onChange={(e) => updateUserInfo({ whatsapp: e.target.value })}
                   />
                   <div className="flex gap-2">
                     <Button onClick={sendEmailSummary} size="sm" className="flex-1">
