@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>N8N Webhook Test</title>
+</head>
+<body>
+    <h2>Test N8N Webhook</h2>
+    <input type="text" id="webhookUrl" placeholder="Enter your n8n webhook URL" style="width: 400px;">
+    <br><br>
+    <input type="text" id="message" placeholder="Test message" value="Hello from test">
+    <br><br>
+    <button onclick="testWebhook()">Test Webhook</button>
+    <br><br>
+    <div id="result"></div>
+
+    <script>
+        async function testWebhook() {
+            const url = document.getElementById('webhookUrl').value;
+            const message = document.getElementById('message').value;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, userId: 'test_user' })
+                });
+                
+                const result = await response.json();
+                document.getElementById('result').innerHTML = 
+                    `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

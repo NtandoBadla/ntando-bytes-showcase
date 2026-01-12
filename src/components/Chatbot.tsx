@@ -6,6 +6,7 @@ import { MessageCircle, X, Mic, MicOff, Send, Volume2, VolumeX } from "lucide-re
 import { useToast } from "@/hooks/use-toast";
 import { useChatbot } from "@/hooks/use-chatbot";
 import { sendToChatGPT, validateApiKey } from "@/lib/chatgpt";
+import { sendToN8nAgent, validateN8nConfig } from "@/lib/n8n-agent";
 import emailjs from '@emailjs/browser';
 
 
@@ -27,6 +28,7 @@ const Chatbot = () => {
   const [isListening, setIsListening] = useState(false);
   const [showUserForm, setShowUserForm] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [useN8nAgent, setUseN8nAgent] = useState(true);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -41,12 +43,24 @@ const Chatbot = () => {
   }, [isOpen, messages.length, addMessage]);
 
   useEffect(() => {
-    if (isOpen && !validateApiKey()) {
-      toast({
-        title: "Configuration Notice",
-        description: "AI features may be limited. Please use the contact form for direct communication.",
-        variant: "default",
-      });
+    if (isOpen) {
+      const hasN8n = validateN8nConfig();
+      const hasChatGPT = validateApiKey();
+      
+      if (!hasN8n && !hasChatGPT) {
+        toast({
+          title: "Configuration Notice",
+          description: "AI features may be limited. Please use the contact form for direct communication.",
+          variant: "default",
+        });
+      } else if (!hasN8n) {
+        setUseN8nAgent(false);
+        toast({
+          title: "Using ChatGPT",
+          description: "N8N agent not configured, falling back to ChatGPT.",
+          variant: "default",
+        });
+      }
     }
   }, [isOpen, toast]);
 
@@ -136,7 +150,22 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      const response = await sendToChatGPT(userMessageText);
+      let response: string;
+      
+      if (useN8nAgent && validateN8nConfig()) {
+        try {
+          response = await sendToN8nAgent(userMessageText, {
+            userInfo,
+            timestamp: new Date().toISOString()
+          });
+        } catch (n8nError) {
+          console.warn('N8N agent failed, falling back to ChatGPT:', n8nError);
+          response = await sendToChatGPT(userMessageText);
+        }
+      } else {
+        response = await sendToChatGPT(userMessageText);
+      }
+      
       addMessage(response, false);
       speakText(response);
     } catch (error) {
@@ -346,6 +375,16 @@ const Chatbot = () => {
                 <Button onClick={sendEmailSummary} variant="outline" size="sm" className="text-xs">
                   Send Chat Summary
                 </Button>
+                {validateN8nConfig() && (
+                  <Button 
+                    onClick={() => setUseN8nAgent(!useN8nAgent)} 
+                    variant={useN8nAgent ? "default" : "outline"} 
+                    size="sm" 
+                    className="text-xs"
+                  >
+                    {useN8nAgent ? "🤖 N8N" : "💬 GPT"}
+                  </Button>
+                )}
               </div>
               <div className="flex gap-2">
                 <Input

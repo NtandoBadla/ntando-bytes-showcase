@@ -1,3 +1,5 @@
+import { formatCVForChatbot } from '@/data/cv-knowledge';
+
 interface ChatGPTMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
@@ -11,7 +13,10 @@ interface ChatGPTResponse {
   }>;
 }
 
-const SYSTEM_PROMPT = `You are Ntando Badla's AI virtual assistant helping visitors learn about Ntando, a skilled software developer from South Africa.
+const getSystemPrompt = (): string => {
+  const cvData = formatCVForChatbot();
+  
+  return `You are Ntando Badla's AI virtual assistant helping visitors learn about Ntando, a skilled software developer from South Africa.
 
 Respond appropriately to different question types:
 
@@ -22,13 +27,27 @@ GREETINGS: Match their style warmly
 
 IDENTITY: "I'm Ntando's AI assistant, here to help with questions about his services and skills."
 
-EDUCATION: Walter Sisulu University graduate with ICT in Application Development , graduated as a Software Developer.
+Here is Ntando's complete CV information:
+${cvData}
 
-TECH STACK: Frontend (React, HTML, CSS, TypeScript, Tailwind CSS), Backend (Java, ASP.NET, Laravel PHP), Database (MySQL), Tools (EmailJS, npm, Node.js).
+When asked about specific topics, provide COMPLETE and DETAILED information:
 
-PRICING: Website development starts from R2,000 depending on complexity and features required.
+EDUCATION questions: Include ALL education details - university, degree, achievements, high school, internships, and certifications.
 
-Answer each question type specifically. Keep responses under 150 words. Encourage contacting Ntando for detailed discussions.`;
+EXPERIENCE questions: Include ALL work experience with companies, positions, durations, responsibilities, and technologies used.
+
+SKILLS questions: List ALL technical skills including programming languages, databases, frameworks, and tools.
+
+PROJECTS questions: Describe ALL projects with technologies, features, and achievements.
+
+ACHIEVEMENTS questions: List ALL accomplishments, certifications, and leadership roles.
+
+SERVICES questions: Provide pricing, technologies offered, and service features.
+
+CONTACT questions: Provide email, phone, and website information.
+
+Always be comprehensive and detailed in your responses. Don't summarize - give complete information. Keep responses under 300 words but include all relevant details. Encourage contacting Ntando for detailed discussions.`;
+};
 
 // Fallback responses for common questions
 const getFallbackResponse = (message: string): string | null => {
@@ -44,16 +63,103 @@ const getFallbackResponse = (message: string): string | null => {
     return "I'm Ntando's AI assistant, here to help with questions about his services, skills, and experience as a software developer.";
   }
   
-  if (msg.includes('tech stack') || msg.includes('technologies') || msg.includes('skills')) {
-    return "Ntando's tech stack includes: Frontend (React, HTML, CSS, TypeScript, Tailwind CSS), Backend (Java, ASP.NET, Laravel PHP), Database (MySQL), and tools like EmailJS, npm, and Node.js.";
+  if (msg.includes('education') || msg.includes('university') || msg.includes('qualification') || msg.includes('study') || msg.includes('degree')) {
+    return `Ntando's Education:
+
+Walter Sisulu University (Dec 2024)
+- Diploma in ICT Application Development
+- Graduated with distinction
+- Average score: 65%
+- Built Residence Management System (Oracle Apex)
+- Deputy Chairperson of House Committee
+
+Vulamasango Secondary School (Dec 2020)
+- Grade 12 completed
+- Student leader for 3 consecutive years
+
+NetCampus IT Internship (May 2025)
+- Azure Data Services certification
+- Microsoft 365 Copilot training
+- Data Management & Analytics`;
   }
   
-  if (msg.includes('education') || msg.includes('university') || msg.includes('Qualification')) {
-    return "Ntando is a Walter Sisulu University graduate with a diploma in ICT in Application Development, and graduated as a Software Developer.";
+  if (msg.includes('experience') || msg.includes('work') || msg.includes('job') || msg.includes('employment')) {
+    return `Ntando's Work Experience:
+
+VoteSphere Project (Aug-Sep 2025)
+- Full Stack Developer
+- Built secure online voting platform
+- React + Tailwind CSS frontend
+- MySQL database management
+
+Akhile - Asset Auditor (Apr-May 2025)
+- Physical asset verification across sites
+- Python, JavaScript, React
+
+Codecraft - Software Developer Intern (Apr 2025)
+- Contact Management System (30% efficiency boost)
+- Web Scraping App (40% time reduction)
+- Java, JSoup development
+
+Walter Sisulu University - Tutor (Jun-Nov 2024)
+- ICT modules mentoring
+- Front-end to back-end integration`;
   }
   
-  if (msg.includes('price') || msg.includes('cost') || msg.includes('charge')) {
-    return "Website development starts from R2,000 depending on complexity and features required. Contact Ntando for a personalized quote based on your specific needs.";
+  if (msg.includes('tech stack') || msg.includes('technologies') || msg.includes('skills') || msg.includes('programming')) {
+    return `Ntando's Technical Skills:
+
+Programming: Java, PHP, Laravel, React, HTML, VB.NET, CSS, JavaScript, Python
+Databases: MySQL, Oracle Apex, MS SQL Server
+Design: Figma
+Frameworks: React, Laravel, .NET Framework
+Systems: ERP, IMS, BAAN, SSRS
+Other: DevOps, CI/CD, Cloud concepts, API integration`;
+  }
+  
+  if (msg.includes('project') || msg.includes('portfolio') || msg.includes('built') || msg.includes('developed')) {
+    return `Ntando's Key Projects:
+
+VoteSphere - Online Voting Platform
+- React, Tailwind CSS, Python, MySQL
+- Secure authentication & role management
+- Live: vote-phere.netlify.app
+
+Residence Management System
+- Oracle Apex development
+- Student & room management
+
+Car Selling Website
+- Team collaboration project
+- Vehicle listings & search
+
+Contact Management System
+- Java-based, 30% efficiency improvement
+
+Web Scraping Application
+- Java & JSoup, 40% time reduction`;
+  }
+  
+  if (msg.includes('price') || msg.includes('cost') || msg.includes('charge') || msg.includes('service')) {
+    return `Ntando's Services:
+
+Web Development: Starting from R2,000
+Technologies: React, Laravel, Java, Python, MySQL
+Features: Responsive design, Database integration, API development, Authentication, Performance optimization, DevOps deployment
+
+Consulting: Technical consulting and mentoring
+Contact: ntandobadla1@gmail.com | +27 74 614 8629`;
+  }
+  
+  if (msg.includes('contact') || msg.includes('reach') || msg.includes('email') || msg.includes('phone')) {
+    return `Contact Ntando:
+
+Email: ntandobadla1@gmail.com
+Phone: +27 74 614 8629
+Website: vote-phere.netlify.app
+Location: Stellenbosch Kayamandi, South Africa
+LinkedIn: linkedin.com/in/ntando-badla
+GitHub: github.com/ntandobadla`;
   }
   
   return null;
@@ -78,14 +184,14 @@ export const sendToChatGPT = async (message: string): Promise<string> => {
         messages: [
           {
             role: 'system',
-            content: SYSTEM_PROMPT
+            content: getSystemPrompt()
           },
           {
             role: 'user',
             content: message
           }
         ] as ChatGPTMessage[],
-        max_tokens: 150,
+        max_tokens: 300,
         temperature: 0.7,
         presence_penalty: 0.1,
         frequency_penalty: 0.1,

@@ -1,7 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Projects from "@/components/Projects";
+import SkillsDashboard from "@/components/SkillsDashboard";
+import InteractiveProjects from "@/components/InteractiveProjects";
+import GitHubActivityFeed from "@/components/GitHubActivityFeed";
 import Services from "@/components/Services";
 import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
@@ -14,7 +16,9 @@ const Index = () => {
       <Navbar />
       <Hero />
       <About />
-      <Projects />
+      <SkillsDashboard />
+      <InteractiveProjects />
+      <GitHubActivityFeed />
       <Services />
       <Certificates />
       <Contact />
