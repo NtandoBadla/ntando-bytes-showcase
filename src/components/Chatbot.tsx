@@ -32,7 +32,9 @@ const Chatbot = () => {
   const [visitorName, setVisitorName] = useState("");
   const [visitorEmail, setVisitorEmail] = useState("");
   const [visitorWhatsapp, setVisitorWhatsapp] = useState("");
+  const infoCollectedRef = useRef(false);
   const [infoCollected, setInfoCollected] = useState(false);
+  const setInfoCollectedBoth = (v: boolean) => { setInfoCollected(v); infoCollectedRef.current = v; };
 
   const handleNameChange = (v: string) => { setVisitorName(v); visitorNameRef.current = v; };
   const handleEmailChange = (v: string) => { setVisitorEmail(v); visitorEmailRef.current = v; };
@@ -159,7 +161,7 @@ const Chatbot = () => {
 
 
   const sendMessageFromVoice = async (text: string) => {
-    if (!text.trim() || !infoCollected) return;
+    if (!text.trim() || !infoCollectedRef.current) return;
     addMessage(text, true);
     setInputText("");
     setIsLoading(true);
@@ -258,7 +260,7 @@ const Chatbot = () => {
     await sendEmailSummary();
     setIsOpen(false);
     setMessages([]);
-    setInfoCollected(false);
+    setInfoCollectedBoth(false);
     setVisitorName("");
     setVisitorEmail("");
     setVisitorWhatsapp("");
@@ -270,7 +272,7 @@ const Chatbot = () => {
   const handleInfoSubmit = () => {
     if (!visitorName.trim() || !visitorEmail.trim()) return;
     updateUserInfo({ name: visitorName, email: visitorEmail, whatsapp: visitorWhatsapp });
-    setInfoCollected(true);
+    setInfoCollectedBoth(true);
     addMessage(`Nice to meet you, ${visitorName}! How can I help you today?`, false);
   };
 
