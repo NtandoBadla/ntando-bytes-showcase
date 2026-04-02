@@ -1,5 +1,4 @@
-// CV Knowledge Base for Ntando Badla
-// This file contains structured information from Ntando's CV that the chatbot can reference
+
 
 export const CV_KNOWLEDGE = {
   personalInfo: {

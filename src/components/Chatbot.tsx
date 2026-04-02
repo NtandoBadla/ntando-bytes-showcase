@@ -29,6 +29,9 @@ const Chatbot = () => {
   const [showUserForm, setShowUserForm] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [useN8nAgent, setUseN8nAgent] = useState(true);
+  const [visitorName, setVisitorName] = useState("");
+  const [visitorEmail, setVisitorEmail] = useState("");
+  const [infoCollected, setInfoCollected] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -36,7 +39,7 @@ const Chatbot = () => {
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       addMessage(
-        "👋 Hi there! I'm Ntando's virtual assistant. You can type or record your question — how can I help you today?",
+        "👋 Hi there! I'm Ntando's virtual assistant. Before we start, what's your name and email so I can follow up with you?",
         false
       );
     }
@@ -176,67 +179,45 @@ const Chatbot = () => {
     }
   };
 
-  const sendEmailSummary = async () => {
-    if (!userInfo.name || !userInfo.email) {
-      setShowUserForm(true);
-      return;
-    }
+  const sendEmailSummary = async (name: string, email: string, currentMessages: typeof messages) => {
+    const chatMessages = currentMessages.filter(msg => !msg.id.includes('welcome'));
+    if (chatMessages.length === 0) return;
 
     try {
-      const chatTranscript = messages
-        .filter(msg => msg.id !== 'welcome')
-        .map(msg => `${msg.isUser ? userInfo.name || 'Visitor' : 'Assistant'}: ${msg.text}`)
+      const chatTranscript = chatMessages
+        .map(msg => `${msg.isUser ? name || 'Visitor' : 'Assistant'}: ${msg.text}`)
         .join('\n');
 
-      const emailData = {
-        user_name: userInfo.name,
-        user_email: userInfo.email,
-        chat_transcript: chatTranscript,
-        timestamp: new Date().toLocaleString(),
-      };
-
-      // Send to Ntando (owner)
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_CHAT_TEMPLATE_ID,
-        {
-          to_email: 'ntandobadla1@gmail.com',
-          ...emailData
-        }
-      );
-
-      // Send copy to user
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          to_email: userInfo.email,
-          ...emailData
-        }
+          user_name: name || 'Visitor',
+          user_email: email || 'Not provided',
+          chat_transcript: chatTranscript,
+          timestamp: new Date().toLocaleString(),
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
-
-      // Send WhatsApp notification to Ntando
-      const whatsappMessage = `🤖 New Chat Summary\n\nFrom: ${userInfo.name}\nEmail: ${userInfo.email}\nTime: ${new Date().toLocaleString()}\n\nChat Summary:\n${chatTranscript.substring(0, 500)}...\n\nCheck your email for full details.`;
-      const whatsappUrl = `https://wa.me/27746148629?text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank');
-
-      // Clear chat and show confirmation
-      setMessages([]);
-      addMessage("Thank you! Chat summary sent to both you and Ntando. He will get in touch with you soon. A WhatsApp notification has also been sent.", false);
-      setShowUserForm(false);
-      
-      toast({
-        title: "Chat Summary Sent!",
-        description: "Summary sent to both emails and WhatsApp notification created.",
-      });
     } catch (error) {
-      console.error('Email Error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to send chat summary. Please try the contact form.",
-        variant: "destructive",
-      });
+      console.error('Failed to send chat transcript:', error);
     }
+  };
+
+  const handleClose = async () => {
+    await sendEmailSummary(visitorName, visitorEmail, messages);
+    setIsOpen(false);
+    setMessages([]);
+    setInfoCollected(false);
+    setVisitorName("");
+    setVisitorEmail("");
+  };
+
+  const handleInfoSubmit = () => {
+    if (!visitorName.trim() || !visitorEmail.trim()) return;
+    updateUserInfo({ name: visitorName, email: visitorEmail });
+    setInfoCollected(true);
+    addMessage(`Nice to meet you, ${visitorName}! How can I help you today?`, false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -257,7 +238,7 @@ const Chatbot = () => {
         <div className="relative group">
           {/* Tooltip */}
           <div className="absolute bottom-16 right-0 bg-primary text-primary-foreground px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-            🤖 How can I assist you?
+            How can I assist you?
             <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary"></div>
           </div>
           
@@ -267,10 +248,7 @@ const Chatbot = () => {
             className="h-16 w-16 rounded-full shadow-xl bg-gradient-to-r from-primary to-accent hover:from-primary-dark hover:to-accent-dark transition-all duration-300 hover:scale-110"
             size="icon"
           >
-            <div className="flex flex-col items-center">
-              <span className="text-lg">🤖</span>
-              <MessageCircle className="h-4 w-4 mt-1" />
-            </div>
+            <MessageCircle className="h-6 w-6" />
           </Button>
         </div>
       </div>
@@ -285,7 +263,7 @@ const Chatbot = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
             >
               <X className="h-4 w-4" />
@@ -335,64 +313,42 @@ const Chatbot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* User Info Form */}
-            {showUserForm && (
+            {/* Visitor Info Collection */}
+            {!infoCollected && (
               <div className="p-4 border-t bg-secondary/50">
-                <p className="text-sm mb-2">Please provide your details to send chat summary:</p>
                 <div className="space-y-2">
                   <Input
                     placeholder="Your Name"
-                    value={userInfo.name}
-                    onChange={(e) => updateUserInfo({ name: e.target.value })}
+                    value={visitorName}
+                    onChange={(e) => setVisitorName(e.target.value)}
                   />
                   <Input
                     placeholder="Your Email"
                     type="email"
-                    value={userInfo.email}
-                    onChange={(e) => updateUserInfo({ email: e.target.value })}
+                    value={visitorEmail}
+                    onChange={(e) => setVisitorEmail(e.target.value)}
                   />
-                  <Input
-                    placeholder="WhatsApp Number (optional)"
-                    type="tel"
-                    value={userInfo.whatsapp || ''}
-                    onChange={(e) => updateUserInfo({ whatsapp: e.target.value })}
-                  />
-                  <div className="flex gap-2">
-                    <Button onClick={sendEmailSummary} size="sm" className="flex-1">
-                      Send Summary
-                    </Button>
-                    <Button onClick={() => setShowUserForm(false)} variant="outline" size="sm">
-                      Cancel
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={handleInfoSubmit}
+                    size="sm"
+                    className="w-full"
+                    disabled={!visitorName.trim() || !visitorEmail.trim()}
+                  >
+                    Start Chatting
+                  </Button>
                 </div>
               </div>
             )}
 
             {/* Input Area */}
             <div className="p-4 border-t">
-              <div className="flex gap-2 mb-2">
-                <Button onClick={sendEmailSummary} variant="outline" size="sm" className="text-xs">
-                  Send Chat Summary
-                </Button>
-                {validateN8nConfig() && (
-                  <Button 
-                    onClick={() => setUseN8nAgent(!useN8nAgent)} 
-                    variant={useN8nAgent ? "default" : "outline"} 
-                    size="sm" 
-                    className="text-xs"
-                  >
-                    {useN8nAgent ? "🤖 N8N" : "💬 GPT"}
-                  </Button>
-                )}
-              </div>
               <div className="flex gap-2">
                 <Input
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Type your message..."
-                  disabled={isLoading}
+                  disabled={isLoading || !infoCollected}
                   className="flex-1"
                 />
                 <Button
