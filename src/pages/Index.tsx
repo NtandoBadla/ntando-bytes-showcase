@@ -36,7 +36,6 @@ const Index = () => {
           import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         );
       } catch {
-        // silently fail
       }
     };
     notifyVisit();
