@@ -53,12 +53,28 @@ Always be comprehensive and detailed in your responses. Don't summarize - give c
 const getFallbackResponse = (message: string): string | null => {
   const msg = message.toLowerCase();
   
-  if (msg.includes('hi') || msg.includes('hello') || msg.includes('ola') || msg.includes('awe')) {
+  if (msg.includes('thank') || msg === 'ty' || msg.includes('appreciate') || msg.includes('thanks')) {
+    return "My pleasure! 😊 Feel free to ask if there's anything else you'd like to know about Ntando.";
+  }
+
+  if (msg.includes('who is ntando') || msg.includes('tell me about ntando') || msg.includes('about ntando')) {
+    return `Ntando Badla is a Full Stack Software Developer from Stellenbosch Kayamandi, South Africa.
+
+He holds a Diploma in ICT Application Development from Walter Sisulu University (graduated with distinction, 2024) and has hands-on experience building full-stack web applications using React, Python, Java, Laravel, and MySQL.
+
+He's worked as a Software Developer Intern at Codecraft, an Asset Auditor at Akhile, and a Tutor at WSU. He also completed an IT internship at NetCampus where he earned Microsoft Azure and Office 365 certifications.
+
+His standout projects include VoteSphere (a secure online voting platform) and a Smart Locker Booking System for Amandla High School.
+
+You can reach him at ntandobadla1@gmail.com or +27 74 614 8629.`;
+  }
+
+  if (msg.includes('hi') || msg.includes('hello') || msg.includes('ola') || msg.includes('awe') || msg.includes('hey')) {
     if (msg.includes('ola')) return "Ola! How are you? I'm Ntando's AI assistant, here to help with questions about his services.";
     if (msg.includes('awe')) return "Awe! How are you? I'm Ntando's AI assistant, here to help with questions about his services.";
     return "Hello! How are you? I'm Ntando's AI assistant, here to help with questions about his services.";
   }
-  
+
   if (msg.includes('who are you') || msg.includes('what are you')) {
     return "I'm Ntando's AI assistant, here to help with questions about his services, skills, and experience as a software developer.";
   }
@@ -167,9 +183,11 @@ GitHub: github.com/ntandobadla`;
 
 export const sendToChatGPT = async (message: string): Promise<string> => {
   const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+  const fallback = getFallbackResponse(message);
   
   if (!apiKey) {
-    return getFallbackResponse(message) || "I'm currently experiencing configuration issues. Please use the contact form to reach Ntando directly.";
+    return fallback || "I don't have an answer for that right now, but you can reach Ntando directly at ntandobadla1@gmail.com or +27 74 614 8629.";
   }
 
   try {
@@ -200,14 +218,9 @@ export const sendToChatGPT = async (message: string): Promise<string> => {
 
     if (!response.ok) {
       console.error('API Error Status:', response.status);
-      const fallback = getFallbackResponse(message);
       if (fallback) return fallback;
-      
-      if (response.status === 401) {
-        return "I'm experiencing authentication issues. Please use the contact form to reach Ntando directly.";
-      }
       if (response.status === 429) {
-        return "I'm experiencing high demand right now. Please try your question again in a moment.";
+        return "I'm a little busy right now — please try again in a moment!";
       }
       throw new Error(`API request failed with status ${response.status}`);
     }
@@ -216,17 +229,15 @@ export const sendToChatGPT = async (message: string): Promise<string> => {
     const content = data.choices[0]?.message?.content;
     
     if (!content) {
-      return getFallbackResponse(message) || "I'm sorry, I couldn't process that request. Please try rephrasing your question.";
+      return fallback || "Could you rephrase that? I want to make sure I give you the right answer.";
     }
 
     return content.trim();
   } catch (error) {
     console.error('ChatGPT API Error:', error);
     
-    const fallback = getFallbackResponse(message);
     if (fallback) return fallback;
-    
-    return "I'm experiencing technical difficulties. Please try again later or use the contact form to reach Ntando directly.";
+    return "I didn't quite catch that — could you try asking in a different way? Or feel free to contact Ntando directly at ntandobadla1@gmail.com.";
   }
 };
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import emailjs from '@emailjs/browser';
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -13,18 +13,33 @@ import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
 
 const Index = () => {
+  const visitSent = useRef(false);
+
   useEffect(() => {
-    emailjs.send(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_CHAT_TEMPLATE_ID,
-      {
-        user_name: 'Portfolio Visitor',
-        user_email: 'N/A',
-        chat_transcript: 'Someone visited your portfolio.',
-        timestamp: new Date().toLocaleString(),
-      },
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-    ).catch(() => {});
+    if (visitSent.current) return;
+    visitSent.current = true;
+
+    const notifyVisit = async () => {
+      try {
+        const geo = await fetch('https://ipapi.co/json/').then(r => r.json());
+        const device = /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+        await emailjs.send(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_CHAT_TEMPLATE_ID,
+          {
+            visitor_city: geo.city || 'Unknown',
+            visitor_country: geo.country_name || 'Unknown',
+            visitor_ip: geo.ip || 'Unknown',
+            visitor_time: new Date().toLocaleString(),
+            visitor_device: `${device} — ${navigator.userAgent.split(')')[0].split('(')[1] || 'Unknown'}`,
+          },
+          import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        );
+      } catch {
+        // silently fail
+      }
+    };
+    notifyVisit();
   }, []);
   return (
     <div className="min-h-screen">

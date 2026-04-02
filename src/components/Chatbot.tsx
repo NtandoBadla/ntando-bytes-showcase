@@ -31,15 +31,25 @@ const Chatbot = () => {
   const [useN8nAgent, setUseN8nAgent] = useState(true);
   const [visitorName, setVisitorName] = useState("");
   const [visitorEmail, setVisitorEmail] = useState("");
+  const [visitorWhatsapp, setVisitorWhatsapp] = useState("");
   const [infoCollected, setInfoCollected] = useState(false);
+
+  const handleNameChange = (v: string) => { setVisitorName(v); visitorNameRef.current = v; };
+  const handleEmailChange = (v: string) => { setVisitorEmail(v); visitorEmailRef.current = v; };
+  const handleWhatsappChange = (v: string) => { setVisitorWhatsapp(v); visitorWhatsappRef.current = v; };
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const messagesRef = useRef(messages);
+  const visitorNameRef = useRef("");
+  const visitorEmailRef = useRef("");
+  const visitorWhatsappRef = useRef("");
+  useEffect(() => { messagesRef.current = messages; }, [messages]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       addMessage(
-        "👋 Hi there! I'm Ntando's virtual assistant. Before we start, what's your name and email so I can follow up with you?",
+        "Hi there! I'm Ntando's virtual assistant. Before we start, what's your name and email so I can follow up with you?",
         false
       );
     }
@@ -83,6 +93,10 @@ const Chatbot = () => {
         const transcript = event.results[0][0].transcript;
         setInputText(transcript);
         setIsListening(false);
+        // auto-send after voice recording
+        setTimeout(() => {
+          sendMessageFromVoice(transcript);
+        }, 300);
       };
 
       recognitionRef.current.onerror = () => {
@@ -144,6 +158,31 @@ const Chatbot = () => {
 
 
 
+  const sendMessageFromVoice = async (text: string) => {
+    if (!text.trim() || !infoCollected) return;
+    addMessage(text, true);
+    setInputText("");
+    setIsLoading(true);
+    try {
+      let response: string;
+      if (useN8nAgent && validateN8nConfig()) {
+        try {
+          response = await sendToN8nAgent(text, { userInfo, timestamp: new Date().toISOString() });
+        } catch {
+          response = await sendToChatGPT(text);
+        }
+      } else {
+        response = await sendToChatGPT(text);
+      }
+      addMessage(response, false);
+      speakText(response);
+    } catch {
+      addMessage("I didn't catch that — could you try again?", false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const sendMessage = async () => {
     if (!inputText.trim()) return;
 
@@ -179,43 +218,58 @@ const Chatbot = () => {
     }
   };
 
-  const sendEmailSummary = async (name: string, email: string, currentMessages: typeof messages) => {
-    const chatMessages = currentMessages.filter(msg => !msg.id.includes('welcome'));
-    if (chatMessages.length === 0) return;
+  const sendEmailSummary = async () => {
+    const name = visitorNameRef.current;
+    const email = visitorEmailRef.current;
+    const whatsapp = visitorWhatsappRef.current;
+    const currentMessages = messagesRef.current;
+
+    console.log('Sending email summary...', { name, email, messageCount: currentMessages.length });
+
+    if (currentMessages.length === 0) {
+      console.log('No messages to send');
+      return;
+    }
+
+    const chatTranscript = currentMessages
+      .map(msg => `${msg.isUser ? name || 'Visitor' : 'Assistant'}: ${msg.text}`)
+      .join('\n');
 
     try {
-      const chatTranscript = chatMessages
-        .map(msg => `${msg.isUser ? name || 'Visitor' : 'Assistant'}: ${msg.text}`)
-        .join('\n');
-
-      await emailjs.send(
+      const result = await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
           user_name: name || 'Visitor',
           user_email: email || 'Not provided',
+          user_whatsapp: whatsapp || 'Not provided',
           chat_transcript: chatTranscript,
           timestamp: new Date().toLocaleString(),
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
+      console.log('Email sent successfully:', result);
     } catch (error) {
-      console.error('Failed to send chat transcript:', error);
+      console.error('EmailJS error:', error);
     }
   };
 
   const handleClose = async () => {
-    await sendEmailSummary(visitorName, visitorEmail, messages);
+    await sendEmailSummary();
     setIsOpen(false);
     setMessages([]);
     setInfoCollected(false);
     setVisitorName("");
     setVisitorEmail("");
+    setVisitorWhatsapp("");
+    visitorNameRef.current = "";
+    visitorEmailRef.current = "";
+    visitorWhatsappRef.current = "";
   };
 
   const handleInfoSubmit = () => {
     if (!visitorName.trim() || !visitorEmail.trim()) return;
-    updateUserInfo({ name: visitorName, email: visitorEmail });
+    updateUserInfo({ name: visitorName, email: visitorEmail, whatsapp: visitorWhatsapp });
     setInfoCollected(true);
     addMessage(`Nice to meet you, ${visitorName}! How can I help you today?`, false);
   };
@@ -320,13 +374,19 @@ const Chatbot = () => {
                   <Input
                     placeholder="Your Name"
                     value={visitorName}
-                    onChange={(e) => setVisitorName(e.target.value)}
+                    onChange={(e) => handleNameChange(e.target.value)}
                   />
                   <Input
                     placeholder="Your Email"
                     type="email"
                     value={visitorEmail}
-                    onChange={(e) => setVisitorEmail(e.target.value)}
+                    onChange={(e) => handleEmailChange(e.target.value)}
+                  />
+                  <Input
+                    placeholder="WhatsApp Number (optional)"
+                    type="tel"
+                    value={visitorWhatsapp}
+                    onChange={(e) => handleWhatsappChange(e.target.value)}
                   />
                   <Button
                     onClick={handleInfoSubmit}
