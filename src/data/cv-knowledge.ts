@@ -62,7 +62,7 @@ export const CV_KNOWLEDGE = {
     {
       company: "Personal Project",
       position: "Full Stack Developer",
-      project: "VoteSphere – Online Voting Platform",
+      project: "VoteSphere–Online Voting Platform",
       duration: "August 2025 - September 2025",
       responsibilities: [
         "Designed and implemented a full-stack web application for secure online voting",
@@ -120,6 +120,7 @@ export const CV_KNOWLEDGE = {
     {
       name: "VoteSphere – Online Voting Platform",
       description: "Full-stack web application for secure online voting with authentication and role management",
+      whyBuilt: "I built VoteSphere because I noticed that many student organisations and small communities still rely on manual, paper-based voting which is slow, error-prone, and easy to manipulate. I wanted to create a secure, accessible digital solution that makes the voting process transparent and trustworthy for everyone.",
       technologies: ["React", "Tailwind CSS", "Python", "JavaScript", "MySQL"],
       features: ["Secure authentication", "Role management", "Election management", "Vote tracking", "Results display"],
       link: "vote-phere.netlify.app"
@@ -127,28 +128,44 @@ export const CV_KNOWLEDGE = {
     {
       name: "Residence Management System",
       description: "University project built using Oracle Apex for managing student residences",
+      whyBuilt: "I built this during my studies at Walter Sisulu University to solve the real problem of manual residence administration. Students and staff struggled with room allocation and record-keeping, so I designed a database-driven system to automate and simplify the entire process.",
       technologies: ["Oracle Apex"],
       features: ["Student management", "Room allocation", "Database integration"]
     },
     {
       name: "Car Selling Website",
       description: "Team project for online car sales platform",
+      whyBuilt: "This was a collaborative university project where our team identified that many local car dealers lacked an online presence. We built this platform to give sellers a digital storefront and buyers an easy way to browse and search for vehicles.",
       technologies: ["Web technologies"],
       features: ["Vehicle listings", "Search functionality", "User management"]
     },
     {
       name: "Contact Management System",
       description: "Java-based system improving data organization and retrieval efficiency by 30%",
+      whyBuilt: "I built this during my internship at Codecraft to address the inefficiency of managing contacts manually. The goal was to create a structured, searchable system that saves time and reduces human error — and it achieved a 30% improvement in efficiency.",
       technologies: ["Java"],
       features: ["Contact organization", "Data retrieval", "Efficient searching"]
     },
     {
       name: "Web Scraping Application",
       description: "Automated data collection tool reducing manual data entry time by 40%",
+      whyBuilt: "I built this to eliminate the tedious and time-consuming task of manually collecting data from multiple websites. By automating the process with Java and JSoup, I reduced manual data entry time by 40%, freeing up time for more valuable work.",
       technologies: ["Java", "JSoup"],
       features: ["Multi-source scraping", "Data automation", "Efficient processing"]
     }
   ],
+
+  currentlyBusyWith: {
+    summary: "I am currently busy preparing for my interview with CAPACITI for the Systems Support, Full Stack Development, and Automation Testing programme (Clickatell Academy – March 2026 intake). I have been shortlisted and have an on-site interview coming up. This is a 6–12 month programme and I am very excited about this opportunity to grow in the tech industry.",
+    details: [
+      "Shortlisted for CAPACITI – Clickatell Academy (March 2026 intake)",
+      "Preparing for on-site interview for Systems Support / Full Stack Development / Automation Testing programme",
+      "The programme runs for 6–12 months",
+      "Continuing to build and improve my portfolio projects",
+      "Sharpening skills in React, Python, and automation testing"
+    ]
+  },
+
 
   services: {
     webDevelopment: {
@@ -211,8 +228,6 @@ export const CV_KNOWLEDGE = {
     }
   ]
 };
-
-// Helper function to format CV data for the chatbot
 export const formatCVForChatbot = (): string => {
   return `
 PERSONAL INFORMATION:
@@ -244,9 +259,15 @@ ${CV_KNOWLEDGE.workExperience.map(exp =>
 ).join('\n')}
 
 KEY PROJECTS:
-${CV_KNOWLEDGE.projects.map(project => 
-  `- ${project.name}: ${project.description} (${project.technologies.join(', ')})`
+${CV_KNOWLEDGE.projects.map(project =>
+  `- ${project.name}: ${project.description} (${project.technologies.join(', ')})
+  Why built: ${project.whyBuilt}`
 ).join('\n')}
+
+CURRENTLY BUSY WITH:
+${CV_KNOWLEDGE.currentlyBusyWith.summary}
+Details:
+${CV_KNOWLEDGE.currentlyBusyWith.details.map(d => `- ${d}`).join('\n')}
 
 SERVICES:
 - Web Development: Starting from ${CV_KNOWLEDGE.services.webDevelopment.startingPrice}

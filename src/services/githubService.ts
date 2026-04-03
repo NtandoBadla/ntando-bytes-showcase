@@ -1,4 +1,4 @@
-// GitHub API service for fetching real-time activity data
+
 export interface GitHubRepo {
   name: string;
   description: string;
@@ -26,10 +26,10 @@ export interface GitHubStats {
 }
 
 class GitHubService {
-  private readonly username = 'NtandoBadla'; // Updated to match your actual GitHub username
+  private readonly username = 'NtandoBadla'; 
   private readonly baseUrl = 'https://api.github.com';
   private cache: Map<string, { data: any; timestamp: number }> = new Map();
-  private readonly CACHE_DURATION = 300000; // 5 minutes
+  private readonly CACHE_DURATION = 300000;
 
   async fetchWithCache<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
     const cached = this.cache.get(key);
@@ -42,11 +42,11 @@ class GitHubService {
     try {
       const data = await fetcher();
       this.cache.set(key, { data, timestamp: now });
-      console.log(`✅ GitHub API: Successfully fetched ${key}`);
+      console.log(`GitHub API: Successfully fetched ${key}`);
       return data;
     } catch (error) {
-      console.warn(`⚠️ GitHub API error for ${key}:`, error);
-      console.log(`🔄 Using fallback data for ${key}`);
+      console.warn(` GitHub API error for ${key}:`, error);
+      console.log(` Using fallback data for ${key}`);
       return cached?.data || this.getFallbackData(key);
     }
   }
@@ -101,18 +101,15 @@ class GitHubService {
         }
         totalStars += repo.stars;
       });
-
-      // Try to get user info for more accurate stats
       let totalCommits = 0;
       try {
         const userResponse = await fetch(`${this.baseUrl}/users/${this.username}`);
         if (userResponse.ok) {
           const userData = await userResponse.json();
-          // GitHub doesn't provide total commits in user API, so we estimate
-          totalCommits = Math.max(repos.length * 15, 100); // Rough estimate
+          totalCommits = Math.max(repos.length * 15, 100); 
         }
       } catch (error) {
-        totalCommits = repos.length * 10; // Fallback estimate
+        totalCommits = repos.length * 10; 
       }
 
       const contributionData = this.generateContributionData();

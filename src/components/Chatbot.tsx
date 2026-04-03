@@ -95,7 +95,6 @@ const Chatbot = () => {
         const transcript = event.results[0][0].transcript;
         setInputText(transcript);
         setIsListening(false);
-        // auto-send after voice recording
         setTimeout(() => {
           sendMessageFromVoice(transcript);
         }, 300);
@@ -292,13 +291,13 @@ const Chatbot = () => {
         }`}
       >
         <div className="relative group">
-          {/* Tooltip */}
+          
           <div className="absolute bottom-16 right-0 bg-primary text-primary-foreground px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
             How can I assist you?
             <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary"></div>
           </div>
           
-          {/* Chat Button */}
+          
           <Button
             onClick={() => setIsOpen(true)}
             className="h-16 w-16 rounded-full shadow-xl bg-gradient-to-r from-primary to-accent hover:from-primary-dark hover:to-accent-dark transition-all duration-300 hover:scale-110"
@@ -308,8 +307,6 @@ const Chatbot = () => {
           </Button>
         </div>
       </div>
-
-      {/* Chat Window */}
       {isOpen && (
         <Card className={`fixed bottom-6 right-6 w-96 max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-3rem)] shadow-xl z-50 transition-all duration-300 ${
           isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
@@ -327,7 +324,7 @@ const Chatbot = () => {
           </CardHeader>
 
           <CardContent className="flex flex-col h-[400px] p-0">
-            {/* Messages */}
+            
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message) => (
                 <div
@@ -357,19 +354,14 @@ const Chatbot = () => {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-secondary text-secondary-foreground p-3 rounded-lg">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-current rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    </div>
+                  <div className="bg-secondary text-secondary-foreground px-3 py-2 rounded-lg text-sm italic">
+                    typing...
                   </div>
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Visitor Info Collection */}
             {!infoCollected && (
               <div className="p-4 border-t bg-secondary/50">
                 <div className="space-y-2">
@@ -402,7 +394,7 @@ const Chatbot = () => {
               </div>
             )}
 
-            {/* Input Area */}
+            
             <div className="p-4 border-t">
               <div className="flex gap-2">
                 <Input

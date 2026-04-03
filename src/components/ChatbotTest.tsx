@@ -18,16 +18,13 @@ const ChatbotTest = () => {
   });
 
   const runTests = () => {
-    // Test API Key
     const apiKeyValid = validateApiKey();
     
-    // Test Speech Recognition
     const speechRecognitionSupported = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
-    
-    // Test Speech Synthesis
+  
     const speechSynthesisSupported = 'speechSynthesis' in window;
     
-    // Test EmailJS
+    
     const emailjsConfigured = !!(
       import.meta.env.VITE_EMAILJS_SERVICE_ID &&
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY &&

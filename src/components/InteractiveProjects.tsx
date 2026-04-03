@@ -18,7 +18,7 @@ const InteractiveProjects = () => {
 
   useEffect(() => {
     loadMetrics();
-    const interval = setInterval(loadMetrics, 60000); // Update every minute
+    const interval = setInterval(loadMetrics, 60000); 
     return () => clearInterval(interval);
   }, []);
 
@@ -161,14 +161,12 @@ const InteractiveProjects = () => {
             {projects.map((project, index) => (
               <Card key={project.id} className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-card to-card/50">
                 <div className="grid lg:grid-cols-2 gap-8 p-8">
-                  {/* Project Overview */}
+                
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-3xl font-bold text-primary mb-2">{project.title}</h3>
                       <p className="text-lg text-muted-foreground">{project.description}</p>
                     </div>
-
-                    {/* Impact Metrics */}
                     <div className="grid grid-cols-2 gap-4">
                       {(() => {
                         const projectMetrics = project.getMetrics();
@@ -203,7 +201,6 @@ const InteractiveProjects = () => {
                       })()} 
                     </div>
 
-                    {/* Tech Stack */}
                     <div>
                       <h4 className="font-semibold mb-3">Technology Stack</h4>
                       <div className="flex flex-wrap gap-2">
@@ -215,7 +212,6 @@ const InteractiveProjects = () => {
                       </div>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="flex gap-4">
                       <Button variant="outline" asChild className="border-primary text-primary hover:bg-primary hover:text-white">
                         <a href={project.github} target="_blank" rel="noopener noreferrer">
@@ -231,8 +227,6 @@ const InteractiveProjects = () => {
                       </Button>
                     </div>
                   </div>
-
-                  {/* Interactive Content */}
                   <div>
                     <Tabs defaultValue="demo" className="w-full">
                       <TabsList className="grid w-full grid-cols-3">
@@ -283,7 +277,6 @@ const InteractiveProjects = () => {
                   </div>
                 </div>
 
-                {/* Technical Highlights */}
                 <div className="px-8 pb-8">
                   <h4 className="font-semibold mb-4 text-primary">Technical Highlights</h4>
                   <div className="grid md:grid-cols-2 gap-3">

@@ -38,7 +38,7 @@ EXPERIENCE questions: Include ALL work experience with companies, positions, dur
 
 SKILLS questions: List ALL technical skills including programming languages, databases, frameworks, and tools.
 
-PROJECTS questions: Describe ALL projects with technologies, features, and achievements.
+PROJECTS questions: Describe ALL projects with technologies, features, achievements, AND explain WHY Ntando built each one. Always include the motivation/reason behind each project.
 
 ACHIEVEMENTS questions: List ALL accomplishments, certifications, and leadership roles.
 
@@ -46,15 +46,16 @@ SERVICES questions: Provide pricing, technologies offered, and service features.
 
 CONTACT questions: Provide email, phone, and website information.
 
+CURRENTLY BUSY WITH questions: Tell them exactly what Ntando is currently working on and focused on right now.
+
 Always be comprehensive and detailed in your responses. Don't summarize - give complete information. Keep responses under 300 words but include all relevant details. Encourage contacting Ntando for detailed discussions.`;
 };
 
-// Fallback responses for common questions
 const getFallbackResponse = (message: string): string | null => {
   const msg = message.toLowerCase();
   
   if (msg.includes('thank') || msg === 'ty' || msg.includes('appreciate') || msg.includes('thanks')) {
-    return "My pleasure! 😊 Feel free to ask if there's anything else you'd like to know about Ntando.";
+    return "My pleasure! Feel free to ask if there's anything else you'd like to know about Ntando.";
   }
 
   if (msg.includes('who is ntando') || msg.includes('tell me about ntando') || msg.includes('about ntando')) {
@@ -140,20 +141,38 @@ VoteSphere - Online Voting Platform
 - React, Tailwind CSS, Python, MySQL
 - Secure authentication & role management
 - Live: vote-phere.netlify.app
+- Why built: Many communities rely on manual voting which is slow and error-prone. Ntando built VoteSphere to provide a secure, transparent digital voting solution.
 
 Residence Management System
 - Oracle Apex development
 - Student & room management
+- Why built: To solve manual residence administration at WSU — automating room allocation and record-keeping for students and staff.
 
 Car Selling Website
 - Team collaboration project
 - Vehicle listings & search
+- Why built: Local car dealers lacked an online presence, so the team built a platform giving sellers a digital storefront and buyers an easy way to browse vehicles.
 
 Contact Management System
 - Java-based, 30% efficiency improvement
+- Why built: To replace inefficient manual contact management at Codecraft, creating a structured searchable system that saves time and reduces errors.
 
 Web Scraping Application
-- Java & JSoup, 40% time reduction`;
+- Java & JSoup, 40% time reduction
+- Why built: To eliminate tedious manual data collection from multiple websites, automating the process and freeing up time for more valuable work.`;
+  }
+
+  if (msg.includes('busy') || msg.includes('currently') || msg.includes('working on') || msg.includes('what are you doing') || msg.includes('what is ntando doing')) {
+    return `Here's what Ntando is currently busy with:
+
+Ntando has been shortlisted for the CAPACITI – Clickatell Academy programme (March 2026 intake) for Systems Support, Full Stack Development, and Automation Testing. He has an on-site interview coming up for this exciting 6–12 month programme.
+
+He is also:
+- Preparing for the CAPACITI interview
+- Continuing to build and improve his portfolio projects
+- Sharpening his skills in React, Python, and automation testing
+
+This is a fantastic opportunity and he is very focused on making the most of it!`;
   }
   
   if (msg.includes('price') || msg.includes('cost') || msg.includes('charge') || msg.includes('service')) {
@@ -172,7 +191,7 @@ Contact: ntandobadla1@gmail.com | +27 74 614 8629`;
 
 Email: ntandobadla1@gmail.com
 Phone: +27 74 614 8629
-Website: vote-phere.netlify.app
+Website: ntando.netlify.app
 Location: Stellenbosch Kayamandi, South Africa
 LinkedIn: linkedin.com/in/ntando-badla
 GitHub: github.com/ntandobadla`;
