@@ -165,12 +165,11 @@ Web Scraping Application
   if (msg.includes('busy') || msg.includes('currently') || msg.includes('working on') || msg.includes('what are you doing') || msg.includes('what is ntando doing')) {
     return `Here's what Ntando is currently busy with:
 
-Ntando has been shortlisted for the CAPACITI – Clickatell Academy programme (March 2026 intake) for Systems Support, Full Stack Development, and Automation Testing. He has an on-site interview coming up for this exciting 6–12 month programme.
+Ntando has been selected for the CAPACITI – Clickatell Academy programme (March 2026 intake) for Systems Support, Full Stack Development, and Automation Testing. He has an on-site training for this exciting 6–12 month programme.
 
 He is also:
-- Preparing for the CAPACITI interview
 - Continuing to build and improve his portfolio projects
-- Sharpening his skills in React, Python, and automation testing
+- Sharpening his skills in Full stack development and automation testing
 
 This is a fantastic opportunity and he is very focused on making the most of it!`;
   }

@@ -156,13 +156,13 @@ export const CV_KNOWLEDGE = {
   ],
 
   currentlyBusyWith: {
-    summary: "I am currently busy preparing for my interview with CAPACITI for the Systems Support, Full Stack Development, and Automation Testing programme (Clickatell Academy – March 2026 intake). I have been shortlisted and have an on-site interview coming up. This is a 6–12 month programme and I am very excited about this opportunity to grow in the tech industry.",
+    summary: "I am currently busy with my internship with CAPACITI for the Systems Support, Full Stack Development, and Automation Testing programme (Clickatell Academy, March 2026 intake).This is a 6–12 month programme and I am very excited about this opportunity to grow in the tech industry.",
     details: [
       "Shortlisted for CAPACITI – Clickatell Academy (March 2026 intake)",
-      "Preparing for on-site interview for Systems Support / Full Stack Development / Automation Testing programme",
+      "Busy with  on-site training for Systems Support / Full Stack Development / Automation Testing programme",
       "The programme runs for 6–12 months",
       "Continuing to build and improve my portfolio projects",
-      "Sharpening skills in React, Python, and automation testing"
+      "Sharpening skills in Full stack development and automation testing"
     ]
   },
 
