@@ -87,6 +87,33 @@ const InteractiveProjects = () => {
         "Automated email system reducing manual work by 85%",
         "Smart allocation algorithm preventing booking conflicts"
       ]
+    },
+    {
+      id: "module-mate",
+      title: "Module-Mate",
+      description: "A web-based academic chatbot that helps students quickly access essential module information through a conversational interface, eliminating the need to search through multiple platforms.",
+      image: null,
+      tech: ["React", "TypeScript", "NodeJS", "Tailwind CSS", "OpenAI API"],
+      github: "https://github.com/NtandoBadla/module-mate.git",
+      demo: "https://module-mate.netlify.app",
+      getMetrics: () => null,
+      features: [
+        { icon: Users, title: "Student Focused", desc: "Conversational interface built for students" },
+        { icon: Database, title: "Module Knowledge", desc: "Instant answers about module content" },
+        { icon: BarChart3, title: "AI Powered", desc: "OpenAI API for intelligent responses" },
+        { icon: Shield, title: "Always Available", desc: "24/7 access to module information" }
+      ],
+      caseStudy: {
+        problem: "Students waste time searching across multiple platforms for basic module information",
+        solution: "Built a conversational AI chatbot that provides instant, accurate module information",
+        results: ["Instant access to module info", "Reduced student frustration", "24/7 availability"]
+      },
+      techHighlights: [
+        "React + TypeScript frontend for type-safe development",
+        "OpenAI API integration for intelligent conversational responses",
+        "Tailwind CSS for a clean, responsive UI",
+        "NodeJS backend handling API requests securely"
+      ]
     }
   ];
 
@@ -236,6 +263,9 @@ const InteractiveProjects = () => {
                       </TabsList>
                       
                       <TabsContent value="demo" className="mt-4">
+                        {project.image && (
+                          <img src={project.image} alt={project.title} className="w-full h-32 object-cover rounded-lg mb-4" />
+                        )}
                         <LiveDemo project={project} />
                       </TabsContent>
                       

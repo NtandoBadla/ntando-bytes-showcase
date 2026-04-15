@@ -23,8 +23,15 @@ const Projects = () => {
       github: "https://github.com/NtandoBadla/highschool-locker-buddy.git",
       demo: "https://amandlahighschool.netlify.app/",
     },
-   
-  ];
+      {
+        title: "Module-Mate",
+        description: "A web based academic chatbot designed to help students quickly access essential module information through a conversational interface. It eliminates the need to search through multiple platforms by providing instant answers",
+        tech: ["React", "Typescript", "NodeJS", "Tailwind CSS", "OpenAI API"],
+        github: "https://github.com/NtandoBadla/module-mate.git",
+        demo: "https://module-mate.netlify.app"
+      },
+      
+  ];  
 
   return (
     <section id="projects" className="py-20 bg-background">
@@ -42,13 +49,15 @@ const Projects = () => {
                 className="gradient-card shadow-medium border-0 hover:shadow-strong transition-all duration-300 hover:-translate-y-2 overflow-hidden group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
+                {project.image && (
+                  <div className="overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                )}
                 <CardHeader>
                   <CardTitle className="text-xl text-primary">
                     {project.title}

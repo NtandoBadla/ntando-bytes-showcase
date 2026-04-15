@@ -152,6 +152,14 @@ export const CV_KNOWLEDGE = {
       whyBuilt: "I built this to eliminate the tedious and time-consuming task of manually collecting data from multiple websites. By automating the process with Java and JSoup, I reduced manual data entry time by 40%, freeing up time for more valuable work.",
       technologies: ["Java", "JSoup"],
       features: ["Multi-source scraping", "Data automation", "Efficient processing"]
+    },
+    {
+      name: "Module-Mate",
+      description: "A web-based academic chatbot that helps students quickly access essential module information through a conversational interface",
+      whyBuilt: "I built Module-Mate because students constantly waste time searching across multiple platforms just to find basic module information. I wanted to create a single conversational interface where students can instantly get the answers they need, available 24/7.",
+      technologies: ["React", "TypeScript", "NodeJS", "Tailwind CSS", "OpenAI API"],
+      features: ["Conversational AI interface", "Module knowledge base", "Instant answers", "24/7 availability"],
+      link: "module-mate.netlify.app"
     }
   ],
 
