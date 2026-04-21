@@ -21,7 +21,11 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 animate-slide-up">
             About Me
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-12 rounded-full" />
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-4 rounded-full" />
+          <p className="text-center text-muted-foreground text-lg mb-12 max-w-2xl mx-auto">
+            ICT in Application Development graduate from Walter Sisulu University,
+            passionate about creating innovative solutions through code
+          </p>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-slide-in-left order-2 md:order-1">

@@ -57,7 +57,7 @@ const Contact = () => {
     {
       name: "LinkedIn",
       icon: Linkedin,
-      href: "www.linkedin.com/in/ntandobadla",
+      href: "https://www.linkedin.com/in/ntandobadla",
       color: "text-accent",
     },
     {
@@ -83,7 +83,7 @@ const Contact = () => {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-12 rounded-full" />
 
-          <div className="grid md:grid-cols-5 gap-8">
+          <div className="grid md:grid-cols-5 gap-8 items-start">
             <div className="md:col-span-3">
               <Card className="gradient-card shadow-medium border-0">
                 <CardHeader>
@@ -93,38 +93,32 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <Input
-                        name="name"
-                        placeholder="Your Name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="bg-background"
-                      />
-                    </div>
-                    <div>
-                      <Input
-                        name="email"
-                        type="email"
-                        placeholder="Your Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="bg-background"
-                      />
-                    </div>
-                    <div>
-                      <Textarea
-                        name="message"
-                        placeholder="Your Message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        rows={5}
-                        className="bg-background resize-none"
-                      />
-                    </div>
+                    <Input
+                      name="name"
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="bg-background"
+                    />
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="Your Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="bg-background"
+                    />
+                    <Textarea
+                      name="message"
+                      placeholder="Your Message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      className="bg-background resize-none"
+                    />
                     <Button
                       type="submit"
                       disabled={isLoading}
@@ -138,7 +132,7 @@ const Contact = () => {
             </div>
 
             <div className="md:col-span-2">
-              <Card className="gradient-card shadow-medium border-0 h-full">
+              <Card className="gradient-card shadow-medium border-0">
                 <CardHeader>
                   <CardTitle className="text-2xl text-primary">
                     Connect With Me

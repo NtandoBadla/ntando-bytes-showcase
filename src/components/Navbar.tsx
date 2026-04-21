@@ -19,7 +19,6 @@ const Navbar = () => {
     { name: "About", href: "#about" },
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#interactive-projects" },
-    { name: "GitHub", href: "#github-activity" },
     { name: "Services", href: "#services" },
     { name: "Contact", href: "#contact" },
   ];
@@ -34,7 +33,7 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-soft"
+          ? "bg-primary-dark/95 backdrop-blur-md shadow-soft"
           : "bg-transparent"
       }`}
     >
@@ -46,7 +45,7 @@ const Navbar = () => {
               e.preventDefault();
               scrollToSection("#home");
             }}
-            className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+            className="text-xl font-bold text-white hover:opacity-80 transition-opacity"
           >
             Ntando Badla
           </a>
@@ -59,17 +58,17 @@ const Navbar = () => {
                   e.preventDefault();
                   scrollToSection(link.href);
                 }}
-                className="text-foreground hover:text-primary transition-colors font-medium relative group"
+                className="text-white hover:text-accent transition-colors font-medium relative group"
               >
                 {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden text-white hover:bg-white/20"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X /> : <Menu />}
@@ -85,7 +84,7 @@ const Navbar = () => {
                   e.preventDefault();
                   scrollToSection(link.href);
                 }}
-                className="block py-2 text-foreground hover:text-primary transition-colors font-medium"
+                className="block py-2 text-white hover:text-accent transition-colors font-medium"
               >
                 {link.name}
               </a>

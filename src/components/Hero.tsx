@@ -21,12 +21,8 @@ const Hero = () => {
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               Ntando Badla
             </h1>
-            <p className="text-2xl md:text-3xl mb-4 text-white/90">
+            <p className="text-2xl md:text-3xl mb-8 text-white/90">
               Software Developer | Web & App Creator
-            </p>
-            <p className="text-lg md:text-xl mb-8 text-white/80 max-w-2xl mx-auto">
-              ICT in Application Development graduate from Walter Sisulu University,
-              passionate about creating innovative solutions through code
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
